@@ -25,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
 
     _userNameController.text = "dharmik";
     super.initState();
