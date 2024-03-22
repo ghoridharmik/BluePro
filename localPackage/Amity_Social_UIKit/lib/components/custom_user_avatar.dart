@@ -1,3 +1,4 @@
+import 'package:amity_uikit_beta_service/components/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,15 +8,25 @@ import '../viewmodel/configuration_viewmodel.dart';
 Widget getAvatarImage(String? url, {double? radius = 20, String? fileId}) {
   return CircleAvatar(
       radius: radius,
-      backgroundColor: const Color(0xFFD9E5FC),
-      backgroundImage: url != null ? NetworkImage("$url?size=medium") : null,
-      child: url != null
-          ? const SizedBox()
-          : Icon(
-              Icons.person,
-              color: Colors.white,
-              size: radius! * 1.5,
-            ));
+      backgroundColor:
+          url != null ? Colors.transparent : Colors.grey.withOpacity(0.2),
+      child: ClipOval(
+        child: url != null
+            ? NetworkImageWidget(url: url)
+            : Icon(
+                Icons.person,
+                color: Colors.black,
+                size: radius! * 1.1,
+              ),
+
+        // child: url != null
+        //     ? const SizedBox()
+        //     : Icon(
+        //         Icons.person,
+        //         color: Colors.white,
+        //         size: radius! * 1.5,
+        //       )
+      ));
 }
 
 Widget getNotificationAvatarImage(String? url,

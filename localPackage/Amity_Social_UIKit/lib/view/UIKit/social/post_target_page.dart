@@ -1,4 +1,5 @@
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/components/network_image.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screen.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screenV2.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
@@ -48,9 +49,12 @@ class _PostToPageState extends State<PostToPage> {
               ListTile(
                 leading: (AmityCoreClient.getCurrentUser().avatarUrl != null)
                     ? CircleAvatar(
+                        radius: 20.0,
                         backgroundColor: Colors.transparent,
-                        backgroundImage: NetworkImage(
-                            AmityCoreClient.getCurrentUser().avatarUrl!),
+                        child: ClipOval(
+                          child: NetworkImageWidget(
+                              url: AmityCoreClient.getCurrentUser().avatarUrl!),
+                        ),
                       )
                     : Container(
                         height: 40,

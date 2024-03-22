@@ -48,6 +48,7 @@ dependencies:
   permission_handler: ^11.0.1
   http: ^0.13.6
   intrinsic_dimension: ^0.3.1
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:

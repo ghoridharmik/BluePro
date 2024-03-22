@@ -83,7 +83,7 @@ class _SearchCommunitiesScreenState extends State<SearchCommunitiesScreen> {
       return DefaultTabController(
         length: 2,
         child: Scaffold(
-          backgroundColor:  Colors.white,
+          backgroundColor: Colors.white,
           body: SafeArea(
             child: Stack(
               children: [
@@ -280,7 +280,7 @@ class UserWidget extends StatelessWidget {
                     builder: (context) => ChangeNotifierProvider(
                         create: (context) => UserFeedVM(),
                         child: UserProfileScreen(
-                          amityUser: amityUser,
+                            amityUser: amityUser,
                           amityUserId: amityUser.userId!,
                         ))));
               },

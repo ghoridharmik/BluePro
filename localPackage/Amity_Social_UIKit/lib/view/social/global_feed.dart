@@ -9,6 +9,7 @@ import 'package:amity_uikit_beta_service/viewmodel/amity_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +40,11 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
     super.dispose();
   }
 
+  bool isShowloader = false;
   @override
   void initState() {
     super.initState();
+    isShowloader = true;
     var globalFeedProvider = Provider.of<FeedVM>(context, listen: false);
     var myCommunityList = Provider.of<MyCommunityVM>(context, listen: false);
     if (myCommunityList.amityCommunities.isEmpty) {
@@ -49,6 +52,10 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
     }
 
     globalFeedProvider.initAmityGlobalfeed();
+    Future.delayed(Duration(seconds: 1), () {
+      isShowloader = false;
+    });
+    setState(() {});
   }
 
   @override
@@ -69,50 +76,56 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
           children: [
             Expanded(
               child: Container(
-                color: Colors.grey[200],
+                color: Colors.white,
                 child: FadedSlideAnimation(
                   beginOffset: const Offset(0, 0.3),
                   endOffset: const Offset(0, 0),
                   slideCurve: Curves.linearToEaseOut,
-                  child: ListView.builder(
-                    // shrinkWrap: true,
-                    controller: vm.scrollcontroller,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: vm.getAmityPosts().length,
-                    itemBuilder: (context, index) {
-                      return StreamBuilder<AmityPost>(
-                          key: Key(vm.getAmityPosts()[index].postId!),
-                          stream: vm.getAmityPosts()[index].listen.stream,
-                          initialData: vm.getAmityPosts()[index],
-                          builder: (context, snapshot) {
-                            var latestComments = snapshot.data!.latestComments;
+                  child: isShowloader
+                      ? Center(
+                          child: CupertinoActivityIndicator(
+                          color: Colors.black,
+                        ))
+                      : ListView.builder(
+                          // shrinkWrap: true,
+                          controller: vm.scrollcontroller,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: vm.getAmityPosts().length,
+                          itemBuilder: (context, index) {
+                            return StreamBuilder<AmityPost>(
+                                key: Key(vm.getAmityPosts()[index].postId!),
+                                stream: vm.getAmityPosts()[index].listen.stream,
+                                initialData: vm.getAmityPosts()[index],
+                                builder: (context, snapshot) {
+                                  var latestComments =
+                                      snapshot.data!.latestComments;
 
-                            return Column(
-                              children: [
-                                index != 0
-                                    ? const SizedBox()
-                                    : widget.isShowMyCommunity
-                                        ? CommunityIconList(
-                                            amityCommunites:
-                                                Provider.of<MyCommunityVM>(
-                                                        context)
-                                                    .amityCommunities,
-                                          )
-                                        : const SizedBox(),
-                                PostWidget(
-                                  feedType: FeedType.global,
-                                  showCommunity: true,
-                                  showlatestComment: true,
-                                  post: snapshot.data!,
-                                  theme: theme,
-                                  postIndex: index,
-                                  isFromFeed: true,
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                  ),
+                                  return Column(
+                                    children: [
+                                      index != 0
+                                          ? const SizedBox()
+                                          : widget.isShowMyCommunity
+                                              ? CommunityIconList(
+                                                  amityCommunites: Provider.of<
+                                                              MyCommunityVM>(
+                                                          context)
+                                                      .amityCommunities,
+                                                )
+                                              : const SizedBox(),
+                                      PostWidget(
+                                        feedType: FeedType.global,
+                                        showCommunity: true,
+                                        showlatestComment: true,
+                                        post: snapshot.data!,
+                                        theme: theme,
+                                        postIndex: index,
+                                        isFromFeed: true,
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
                 ),
               ),
             ),

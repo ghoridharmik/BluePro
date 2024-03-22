@@ -407,6 +407,8 @@ class UserProfileScreenState extends State<UserProfileScreen>
                     shadowColor: Colors.white,
                     primary: false,
                     elevation: 0,
+
+                    automaticallyImplyLeading: false,
                     surfaceTintColor: Colors.transparent,
                     backgroundColor: Colors.white,
                     floating: false,
@@ -422,14 +424,17 @@ class UserProfileScreenState extends State<UserProfileScreen>
 
                     /// Remove Back Button
 
-                    leading: (widget.isEnableBackButtton ?? false)
-                        ? IconButton(
-                            icon: const Icon(
-                              Icons.chevron_left,
-                              color: Color(0xff292B32),
-                              size: 30,
+                    leading: (widget.isEnableBackButtton ?? true)
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 35),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.chevron_left,
+                                color: Color(0xff292B32),
+                                size: 30,
+                              ),
+                              onPressed: () => Navigator.of(context).pop(),
                             ),
-                            onPressed: () => Navigator.of(context).pop(),
                           )
                         : null,
 
@@ -437,7 +442,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                       padding: const EdgeInsets.only(bottom: 60),
                       child: Column(
                         children: [
-                          const SizedBox(height: 90),
+                          const SizedBox(height: 80),
                           Padding(
                             padding: const EdgeInsets.only(left: 16, right: 16),
                             child: Column(
@@ -529,7 +534,7 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                     ],
                                   ),
                                 ),
-                                // const SizedBox(height: 12),
+                                const SizedBox(height: 4),
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Wrap(
