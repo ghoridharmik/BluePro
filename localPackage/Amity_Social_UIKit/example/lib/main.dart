@@ -28,8 +28,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: false,
+      ),
       home: MyHomePage(),
     );
   }
@@ -131,8 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     }
                     log("save pref");
 
-                    await AmitySLEUIKit().initUIKit(
-                      "",
+                    await AmitySLEUIKit().initUIKit("",
                         apikey: _apiKey.text,
                         region: _selectedRegion!,
                         customEndpoint: _customUrl.text);

@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/components/network_image.dart';
+import 'package:amity_uikit_beta_service/utils/string_extension.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/community_member_page.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/edit_community.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/setting_page.dart';
@@ -9,6 +11,7 @@ import 'package:amity_uikit_beta_service/view/social/pending_page.dart';
 import 'package:amity_uikit_beta_service/view/user/medie_component.dart';
 import 'package:amity_uikit_beta_service/viewmodel/component_size_viewmodel.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intrinsic_dimension/intrinsic_dimension.dart';
 import 'package:provider/provider.dart';
@@ -150,7 +153,7 @@ class CommunityScreenState extends State<CommunityScreen> {
               endOffset: const Offset(0, 0),
               slideCurve: Curves.linearToEaseOut,
               child: Container(
-                color: Colors.grey[200],
+                color: Colors.white,
                 child: RefreshIndicator(
                   color:
                       Provider.of<AmityUIConfiguration>(context).primaryColor,
@@ -164,29 +167,47 @@ class CommunityScreenState extends State<CommunityScreen> {
                             widget.community.communityId!,
                             AmityFeedType.REVIEWING);
                   },
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(top: 0),
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: vm.getCommunityPosts().length,
-                    itemBuilder: (context, index) {
-                      return StreamBuilder<AmityPost>(
-                          key: Key(vm.getCommunityPosts()[index].postId!),
-                          stream: vm.getCommunityPosts()[index].listen.stream,
-                          initialData: vm.getCommunityPosts()[index],
-                          builder: (context, snapshot) {
-                            return PostWidget(
-                              showCommunity: false,
-                              showlatestComment: true,
-                              isFromFeed: true,
-                              post: snapshot.data!,
-                              theme: theme,
-                              postIndex: index,
-                              feedType: FeedType.community,
-                            );
-                          });
-                    },
-                  ),
+                  child: vm.isLoaderForCommunity
+                      ? const Center(
+                          child: CupertinoActivityIndicator(
+                          color: Colors.black,
+                        ))
+                      : vm.getCommunityPosts().isEmpty
+                          ? const Center(
+                              child: Text(
+                              "No Post found",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ))
+                          : ListView.builder(
+                              padding: const EdgeInsets.only(top: 0),
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: vm.getCommunityPosts().length,
+                              itemBuilder: (context, index) {
+                                return StreamBuilder<AmityPost>(
+                                    key: Key(
+                                        vm.getCommunityPosts()[index].postId!),
+                                    stream: vm
+                                        .getCommunityPosts()[index]
+                                        .listen
+                                        .stream,
+                                    initialData: vm.getCommunityPosts()[index],
+                                    builder: (context, snapshot) {
+                                      return PostWidget(
+                                        showCommunity: false,
+                                        showlatestComment: true,
+                                        isFromFeed: true,
+                                        post: snapshot.data!,
+                                        theme: theme,
+                                        postIndex: index,
+                                        feedType: FeedType.community,
+                                      );
+                                    });
+                              },
+                            ),
                 ),
               ),
             );
@@ -598,7 +619,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
       children: [
         Container(
           color: Colors.white,
-          height: 120,
+          height: 80,
         ),
         Stack(
           alignment: AlignmentDirectional.bottomStart,
@@ -606,28 +627,44 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
             Row(
               children: [
                 Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    height: MediaQuery.of(context).size.width * 0.7,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD9E5FC),
-                      image: widget.community.avatarImage != null
-                          ? DecorationImage(
-                              image: NetworkImage(widget.community.avatarImage!
-                                  .getUrl(AmityImageSize.LARGE)),
-                              fit: BoxFit.cover,
-                            )
-                          : const DecorationImage(
-                              image: AssetImage("assets/images/IMG_5637.JPG",
-                                  package: 'amity_uikit_beta_service'),
-                              fit: BoxFit.cover),
-                    ),
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(
-                            0.4), // Applying a 40% dark filter to the entire container
+                  child: Stack(
+                    children: [
+                      //Change
+                      Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.width * 0.7,
+                        // decoration: BoxDecoration(
+                        color: Colors.white,
+                        //   image: widget.community.avatarImage != null
+                        //       ? DecorationImage(
+                        //           image: NetworkImage(widget.community.avatarImage!
+                        //               .getUrl(AmityImageSize.LARGE)),
+                        //           fit: BoxFit.cover,
+                        //         )
+                        //       : const DecorationImage(
+                        //           image: AssetImage("assets/images/IMG_5637.JPG",
+                        //               package: 'amity_uikit_beta_service'),
+                        //           fit: BoxFit.cover),
+                        // ),
+                        child: NetworkImageWidget(
+                          url: widget.community.avatarImage
+                                  ?.getUrl(AmityImageSize.LARGE) ??
+                              '',
+                          boxFit: BoxFit.cover,
+                        ),
+                        // child: DecoratedBox(
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.black.withOpacity(
+                        //         0.4), // Applying a 40% dark filter to the entire container
+                        //   ),
+                        // ),
                       ),
-                    ),
+                      Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.width * 0.7,
+                        color: Colors.black.withOpacity(0.4),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -654,7 +691,7 @@ class _CommunityDetailComponentState extends State<CommunityDetailComponent> {
                             ),
                       Text(
                           widget.community.displayName != null
-                              ? widget.community.displayName!
+                              ? widget.community.displayName!.toTitleCase()
                               : "Community",
                           style: const TextStyle(
                               fontSize: 20,

@@ -49,6 +49,9 @@ dependencies:
   http: ^0.13.6
   intrinsic_dimension: ^0.3.1
   cached_network_image: ^3.3.1
+  get_storage: ^2.1.1
+  restart_app: ^1.2.1
+  amity_video_player: ^0.0.3
 
 dev_dependencies:
   flutter_test:

@@ -7,16 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:restart_app/restart_app.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+class StreamingScreen extends StatefulWidget {
+  const StreamingScreen({
     super.key,
   });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<StreamingScreen> createState() => _StreamingScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _StreamingScreenState extends State<StreamingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,18 +24,24 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: Text(
-            'Welcome, ${GetStorage().read(StorageConstants.user).toString()}'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              logout();
-            },
-            icon: const Icon(
-              Icons.logout_rounded,
-            ),
+        title: const Text(
+          'Streaming',
+          style: TextStyle(
+            fontSize: 17,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
           ),
-        ],
+        ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () {
+        //       // logout();
+        //     },
+        //     icon: const Icon(
+        //       Icons.logout_rounded,
+        //     ),
+        //   ),
+        // ],
       ),
       body: const SafeArea(
         child: Padding(
@@ -46,10 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Center(
                 child: Text(
-                  "Home Page",
+                  "Coming Soon...",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 20,
                   ),
                 ),
               )
@@ -130,41 +137,41 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  logout() {
-    return showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context)
-                  .pop(false); // Return false to indicate cancel
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              AmitySLEUIKit().unRegisterDevice();
-              await GetStorage().erase();
-              // Navigator.pushAndRemoveUntil(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => LoginScreen(),
-              //     ),
-              //     (route) => false);
-              // RestartWidget.restartApp(context);
-              await Future.delayed(Duration(milliseconds: 500));
-              Restart.restartApp();
-            },
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
-  }
+  // logout() {
+  //   return showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       backgroundColor: Colors.white,
+  //       title: const Text('Logout'),
+  //       content: const Text('Are you sure you want to logout?'),
+  //       actions: <Widget>[
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context)
+  //                 .pop(false); // Return false to indicate cancel
+  //           },
+  //           child: const Text('Cancel'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () async {
+  //             AmitySLEUIKit().unRegisterDevice();
+  //             await GetStorage().erase();
+  //             // Navigator.pushAndRemoveUntil(
+  //             //     context,
+  //             //     MaterialPageRoute(
+  //             //       builder: (context) => LoginScreen(),
+  //             //     ),
+  //             //     (route) => false);
+  //             // RestartWidget.restartApp(context);
+  //             await Future.delayed(Duration(milliseconds: 500));
+  //             Restart.restartApp();
+  //           },
+  //           child: const Text('Logout'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void cupertinoDialog(
     BuildContext? context, {

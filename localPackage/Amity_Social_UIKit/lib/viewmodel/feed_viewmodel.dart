@@ -15,6 +15,7 @@ class FeedVM extends ChangeNotifier {
   final scrollcontroller = ScrollController();
 
   bool loadingNexPage = false;
+  bool isLoaderForGlobalFeed = false;
   List<AmityPost> getAmityPosts() {
     return _amityGlobalFeedPosts;
   }
@@ -39,6 +40,7 @@ class FeedVM extends ChangeNotifier {
   }
 
   Future<void> initAmityGlobalfeed() async {
+    isLoaderForGlobalFeed = true;
     _controllerGlobal = PagingController(
       pageFuture: (token) => AmitySocialClient.newFeedRepository()
           .getGlobalFeed()
@@ -57,9 +59,14 @@ class FeedVM extends ChangeNotifier {
                 }
               }
             }
+            await Future.delayed(
+              const Duration(milliseconds: 500),
+            );
+            isLoaderForGlobalFeed = false;
             notifyListeners();
           } else {
             //Error on pagination controller
+            isLoaderForGlobalFeed = false;
 
             log("error");
             await AmityDialog().showAlertErrorDialog(

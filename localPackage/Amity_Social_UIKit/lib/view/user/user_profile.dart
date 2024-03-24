@@ -1,4 +1,5 @@
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/amity_sle_uikit.dart';
 import 'package:amity_uikit_beta_service/utils/dynamicSilverAppBar.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screenV2.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/post_target_page.dart';
@@ -8,7 +9,10 @@ import 'package:amity_uikit_beta_service/view/user/user_setting.dart';
 import 'package:amity_uikit_beta_service/viewmodel/follower_following_viewmodel.dart';
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
+import 'package:amity_uikit_beta_service/utils/string_extension.dart';
 
 import '../../components/custom_user_avatar.dart';
 import '../../viewmodel/amity_viewmodel.dart';
@@ -478,7 +482,9 @@ class UserProfileScreenState extends State<UserProfileScreen>
                                               // Text(vm.amityMyFollowInfo.status
                                               //     .toString()),
                                               Text(
-                                                getAmityUser().displayName ??
+                                                getAmityUser()
+                                                        .displayName
+                                                        ?.toTitleCase() ??
                                                     "",
                                                 style: const TextStyle(
                                                     fontSize: 20,
@@ -611,31 +617,44 @@ class UserProfileScreenState extends State<UserProfileScreen>
                         ],
                       ),
                     ),
+                    //Remove More Icon
                     actions: [
                       vm.amityMyFollowInfo.id == null
                           ? const SizedBox()
-                          : StreamBuilder<AmityUserFollowInfo>(
-                              stream: vm.amityMyFollowInfo.listen.stream,
-                              initialData: vm.amityMyFollowInfo,
-                              builder: (context, snapshot) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 35),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.more_horiz,
-                                        color: Colors.black),
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  UserSettingPage(
-                                                    amityMyFollowInfo:
-                                                        snapshot.data!,
-                                                    amityUser: vm.amityUser!,
-                                                  )));
-                                    },
-                                  ),
-                                );
-                              }),
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 36),
+                              child: IconButton(
+                                onPressed: () {
+                                  logout();
+                                },
+                                icon: const Icon(
+                                  Icons.logout_rounded,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ),
+                      // : StreamBuilder<AmityUserFollowInfo>(
+                      //     stream: vm.amityMyFollowInfo.listen.stream,
+                      //     initialData: vm.amityMyFollowInfo,
+                      //     builder: (context, snapshot) {
+                      //       return Padding(
+                      //         padding: const EdgeInsets.only(top: 35),
+                      //         child: IconButton(
+                      //           icon: const Icon(Icons.more_horiz,
+                      //               color: Colors.black),
+                      //           onPressed: () {
+                      //             Navigator.of(context).push(
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         UserSettingPage(
+                      //                           amityMyFollowInfo:
+                      //                               snapshot.data!,
+                      //                           amityUser: vm.amityUser!,
+                      //                         )));
+                      //           },
+                      //         ),
+                      //       );
+                      //     }),
                     ],
                     bottom: PreferredSize(
                       preferredSize: const Size.fromHeight(20),
@@ -678,5 +697,41 @@ class UserProfileScreenState extends State<UserProfileScreen>
         return const Scaffold();
       }
     });
+  }
+
+  logout() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: const Text('Logout'),
+        content: const Text('Are you sure you want to logout?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pop(false); // Return false to indicate cancel
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () async {
+              AmitySLEUIKit().unRegisterDevice();
+              await GetStorage().erase();
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) => LoginScreen(),
+              //     ),
+              //     (route) => false);
+              // RestartWidget.restartApp(context);
+              await Future.delayed(Duration(milliseconds: 500));
+              Restart.restartApp();
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
   }
 }

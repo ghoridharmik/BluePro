@@ -9,13 +9,16 @@ class NetworkImageWidget extends StatelessWidget {
     this.boxFit = BoxFit.contain,
     this.width,
     this.height,
+    this.isShowIcon = true,
+    this.loaderColor,
   }) : super(key: key);
 
   final String url;
   final double? height;
   final double? width;
   final BoxFit boxFit;
-
+  final bool isShowIcon;
+  final Color? loaderColor;
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
@@ -24,13 +27,18 @@ class NetworkImageWidget extends StatelessWidget {
       width: width,
       imageUrl: url,
       fit: boxFit,
-      placeholder: (context, url) => const CupertinoActivityIndicator(
-          animating: true, color: Colors.black),
+      placeholder: (context, url) => CupertinoActivityIndicator(
+          animating: true, color: loaderColor ?? Colors.black),
       errorWidget: (context, url, e) {
-        return Icon(
-          Icons.person,
-          color: Colors.white,
-        );
+        return isShowIcon
+            ? const Icon(
+                Icons.person,
+                color: Colors.white,
+              )
+            : Image.asset(
+                'assets/images/IMG_5637.JPG',
+                package: 'amity_uikit_beta_service',
+              );
       },
     );
   }

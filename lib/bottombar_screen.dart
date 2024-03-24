@@ -2,6 +2,7 @@ import 'package:amity_uikit_beta_service/amity_sle_uikit.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/explore_page.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/post_target_page.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile.dart';
+import 'package:blupro/component/common_webview.dart';
 import 'package:blupro/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,10 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   }
 
   final List<Widget> _screens = [
-    HomeScreen(),
-    PostToPage(),
     CommunityPage(),
+    PostToPage(),
+    LeaderBoardScreen(),
+    StreamingScreen(),
     UserProfileScreen(
       amityUser: AmitySLEUIKit().getCurrentUser(),
       isEnableBackButtton: false,
@@ -59,20 +61,26 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           canvasColor: Colors.white,
         ),
         child: BottomNavigationBar(
+          selectedFontSize: 12,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
+          
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: 'My Feed',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.add_box_outlined),
               label: 'Post',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: 'Community',
+              icon: Icon(Icons.leaderboard_rounded),
+              label: 'LeaderBoard',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.live_tv_rounded),
+              label: 'Streaming',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

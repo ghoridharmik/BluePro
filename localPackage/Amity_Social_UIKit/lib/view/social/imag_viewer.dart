@@ -1,4 +1,5 @@
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/components/network_image.dart';
 import 'package:flutter/material.dart';
 
 class ImageViewerScreen extends StatefulWidget {
@@ -31,9 +32,17 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: Text('${_currentIndex + 1}/${widget.files.length}'),
+          title: Text(
+            '${_currentIndex + 1}/${widget.files.length}',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
           leading: IconButton(
-            icon: const Icon(Icons.close),
+            icon: const Icon(
+              Icons.close,
+              color: Colors.white,
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -52,15 +61,23 @@ class _ImageViewerScreenState extends State<ImageViewerScreen> {
                 padding: const EdgeInsets.all(2.0),
                 child: Stack(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(
-                              imageData.image!.getUrl(AmityImageSize.LARGE)),
-                          fit: BoxFit.fitWidth,
-                        ),
+                    Center(
+                      child: NetworkImageWidget(
+                        url: imageData.image!.getUrl(AmityImageSize.LARGE),
+                        boxFit: BoxFit.fitWidth,
+                        loaderColor: Colors.white,
                       ),
                     ),
+                    //Remove
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     image: DecorationImage(
+                    //       image: NetworkImage(
+                    //           imageData.image!.getUrl(AmityImageSize.LARGE)),
+                    //       fit: BoxFit.fitWidth,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

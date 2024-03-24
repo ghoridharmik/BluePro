@@ -19,9 +19,11 @@ class AmityDialog {
 
     if (isshowDialog) {
       await showDialog(
+        
         barrierDismissible: isbarrierDismissible(),
         context: NavigationService.navigatorKey.currentContext!,
         builder: (context) => AlertDialog(
+          backgroundColor: Colors.white ,
           title: Text(title),
           content: Text(message),
           actions: [

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/alert_dialog.dart';
+import 'package:amity_uikit_beta_service/utils/string_extension.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/community_setting/posts/edit_post_page.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/general_component.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/my_community_feed.dart';
@@ -40,22 +41,28 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
     super.dispose();
   }
 
-  bool isShowloader = false;
+  // bool isShowloader = false;
 
   @override
   void initState() {
+    // isShowloader = true;
+
     super.initState();
-    isShowloader = true;
+    init();
+  }
+
+  Future init() async {
     var globalFeedProvider = Provider.of<FeedVM>(context, listen: false);
     var myCommunityList = Provider.of<MyCommunityVM>(context, listen: false);
+
     if (myCommunityList.amityCommunities.isEmpty) {
       myCommunityList.initMyCommunity();
     }
 
-    globalFeedProvider.initAmityGlobalfeed();
-    Future.delayed(const Duration(seconds: 1), () {
-      isShowloader = false;
-    });
+    await globalFeedProvider.initAmityGlobalfeed();
+    // Future.delayed(const Duration(milliseconds: 800), () {
+    //   // isShowloader = false;
+    // });
     setState(() {});
   }
 
@@ -71,7 +78,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
       return RefreshIndicator(
         color: Provider.of<AmityUIConfiguration>(context).primaryColor,
         onRefresh: () async {
-          await vm.initAmityGlobalfeed();
+          await init();
         },
         child: Column(
           children: [
@@ -82,7 +89,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
                   beginOffset: const Offset(0, 0.3),
                   endOffset: const Offset(0, 0),
                   slideCurve: Curves.linearToEaseOut,
-                  child: isShowloader
+                  child: vm.isLoaderForGlobalFeed
                       ? const Center(
                           child: CupertinoActivityIndicator(
                           color: Colors.black,
@@ -391,11 +398,13 @@ class _PostWidgetState extends State<PostWidget>
                               child: Text(
                                 widget.post.postedUser!.userId !=
                                         AmityCoreClient.getCurrentUser().userId
-                                    ? widget.post.postedUser?.displayName ??
+                                    ? widget.post.postedUser?.displayName
+                                            ?.toTitleCase() ??
                                         "Display name"
                                     : Provider.of<AmityVM>(context)
                                             .currentamityUser!
-                                            .displayName ??
+                                            .displayName
+                                            ?.toTitleCase() ??
                                         "",
                                 style: widget.theme.textTheme.bodyLarge!
                                     .copyWith(

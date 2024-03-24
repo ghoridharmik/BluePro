@@ -14,6 +14,7 @@ class CommuFeedVM extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isLoaderForCommunity = false;
   MediaType getMediaType() => _selectedMediaType;
   bool isCurrentUserIsAdmin = false;
   var _amityCommunityFeedPosts = <AmityPost>[];
@@ -60,6 +61,7 @@ class CommuFeedVM extends ChangeNotifier {
 
   Future<void> initAmityCommunityFeed(String communityId) async {
     isCurrentUserIsAdmin = false;
+    isLoaderForCommunity = true;
 
     //inititate the PagingController
     _controllerCommu = PagingController(
@@ -78,6 +80,10 @@ class CommuFeedVM extends ChangeNotifier {
             //and add with the latest _controller.loadedItems
             _amityCommunityFeedPosts.clear();
             _amityCommunityFeedPosts.addAll(_controllerCommu.loadedItems);
+            await Future.delayed(
+              Duration(milliseconds: 800),
+            );
+            isLoaderForCommunity = false;
 
             //update widgets
             notifyListeners();
@@ -102,6 +108,7 @@ class CommuFeedVM extends ChangeNotifier {
         .includeDeleted(false)
         .getPagingData()
         .then((value) {
+      print("*******************************");
       _amityCommunityFeedPosts = value.data;
     });
     notifyListeners();

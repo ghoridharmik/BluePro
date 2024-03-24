@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/components/network_image.dart';
 import 'package:amity_uikit_beta_service/view/social/imag_viewer.dart';
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -501,16 +502,13 @@ class AmityPostWidgetState extends State<AmityPostWidget> {
             ),
           );
         },
-        child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Container(
+        child: ClipRRect(
+          borderRadius: borderRadius!,
+          child: Padding(
             padding: const EdgeInsets.all(2.0),
-            decoration: BoxDecoration(
-              borderRadius: borderRadius,
-              image: DecorationImage(
-                image: NetworkImage(fileUrl),
-                fit: BoxFit.cover,
-              ),
+            child: NetworkImageWidget(
+              url: fileUrl,
+              boxFit: BoxFit.cover,
             ),
           ),
         ),

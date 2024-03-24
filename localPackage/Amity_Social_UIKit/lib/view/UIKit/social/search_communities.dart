@@ -280,7 +280,7 @@ class UserWidget extends StatelessWidget {
                     builder: (context) => ChangeNotifierProvider(
                         create: (context) => UserFeedVM(),
                         child: UserProfileScreen(
-                            amityUser: amityUser,
+                          amityUser: amityUser,
                           amityUserId: amityUser.userId!,
                         ))));
               },

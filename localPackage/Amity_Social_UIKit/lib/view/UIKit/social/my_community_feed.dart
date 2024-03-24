@@ -1,4 +1,5 @@
 import 'package:amity_sdk/amity_sdk.dart';
+import 'package:amity_uikit_beta_service/components/network_image.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_community_page.dart';
 import 'package:amity_uikit_beta_service/view/social/community_feed.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
@@ -6,6 +7,7 @@ import 'package:amity_uikit_beta_service/viewmodel/my_community_viewmodel.dart';
 import 'package:amity_uikit_beta_service/viewmodel/user_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:amity_uikit_beta_service/utils/string_extension.dart';
 
 class MyCommunityPage extends StatefulWidget {
   const MyCommunityPage({super.key});
@@ -143,7 +145,7 @@ class CommunityWidget extends StatelessWidget {
                   const SizedBox(width: 4.0),
                   Expanded(
                     child: Text(
-                      communityStream.displayName ?? "Community",
+                      communityStream.displayName?.toTitleCase() ?? "Community",
                       style: const TextStyle(overflow: TextOverflow.ellipsis),
                     ),
                   ),
@@ -246,27 +248,47 @@ class CommunityIconWidget extends StatelessWidget {
               width: 62,
               margin: const EdgeInsets.only(right: 4, bottom: 10),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  //Change Ui
                   Expanded(
-                    child: (amityCommunity.avatarImage != null)
-                        ? CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: NetworkImage(amityCommunity
-                                .avatarImage!
-                                .getUrl(AmityImageSize.SMALL)),
-                          )
-                        : Container(
-                            height: 40,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                                color: Color(0xFFD9E5FC),
-                                shape: BoxShape.circle),
-                            child: const Icon(
-                              Icons.group,
-                              color: Colors.white,
-                            ),
-                          ),
+                    child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: amityCommunity.avatarImage != null
+                            ? Colors.transparent
+                            : const Color(0xFFD9E5FC),
+                        child: ClipOval(
+                          child: amityCommunity.avatarImage != null
+                              ? NetworkImageWidget(
+                                  url: amityCommunity.avatarImage!
+                                      .getUrl(AmityImageSize.SMALL),
+                                  boxFit: BoxFit.cover,
+                                  height: 40,
+                                  width: 40,
+                                )
+                              : const Icon(
+                                  Icons.group,
+                                  color: Colors.white,
+                                  size: 20 * 1.1,
+                                ),
+                        )),
+                    // (amityCommunity.avatarImage != null)
+                    //     ? CircleAvatar(
+                    //         radius: 20,
+                    //         backgroundColor: Colors.transparent,
+                    //         backgroundImage: NetworkImage(),
+                    //       )
+                    //     : Container(
+                    //         height: 40,
+                    //         width: 40,
+                    //         decoration: const BoxDecoration(
+                    //             color: Color(0xFFD9E5FC),
+                    //             shape: BoxShape.circle),
+                    //         child: const Icon(
+                    //           Icons.group,
+                    //           color: Colors.white,
+                    //         ),
+                    //       ),
                   ),
                   Row(
                     children: [
@@ -277,7 +299,8 @@ class CommunityIconWidget extends StatelessWidget {
                             )
                           : const SizedBox(),
                       Expanded(
-                        child: Text(amityCommunity.displayName ?? "",
+                        child: Text(
+                            amityCommunity.displayName?.toTitleCase() ?? "",
                             style: const TextStyle(
                                 overflow: TextOverflow.ellipsis)),
                       ),

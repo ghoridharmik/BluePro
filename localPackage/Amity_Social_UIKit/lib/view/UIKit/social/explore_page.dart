@@ -33,7 +33,7 @@ class _CommunityPageState extends State<CommunityPage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: const Color(0xFFEBECEF),
+        backgroundColor: Colors.white,
         appBar: AppBar(
           elevation: 0.05, // Add this line to remove the shadow
           backgroundColor: Colors.white,
@@ -48,7 +48,7 @@ class _CommunityPageState extends State<CommunityPage> {
           // centerTitle: false,
           automaticallyImplyLeading: false,
           title: Text(
-            "Community",
+            "My Feed",
             style: Provider.of<AmityUIConfiguration>(context).titleTextStyle,
           ),
           actions: [
@@ -64,67 +64,72 @@ class _CommunityPageState extends State<CommunityPage> {
               },
             )
           ],
-          bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(
-                48.0), // Provide a height for the AppBar's bottom
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    TabBar(
-                      tabAlignment: TabAlignment.start,
-                      isScrollable:
-                          true, // Ensure that the TabBar is scrollable
+          //Remove TabBar
+          // bottom: const PreferredSize(
+          //   preferredSize: Size.fromHeight(
+          //       48.0), // Provide a height for the AppBar's bottom
+          //   child: Column(
+          //     children: [
+          //       Row(
+          //         children: [
+          //           TabBar(
+          //             tabAlignment: TabAlignment.start,
+          //             isScrollable:
+          //                 true, // Ensure that the TabBar is scrollable
 
-                      labelColor: Color(0xFF1054DE), // #1054DE color
-                      unselectedLabelColor: Colors.grey,
-                      indicatorColor: Color(0xFF1054DE),
-                      labelStyle: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'SF Pro Text',
-                      ),
-                      tabs: [
-                        Tab(
-                          text: "Newfeed",
-                        ),
-                        Tab(text: "Explore"),
-                      ],
-                    ),
-                  ],
-                ),
-                // Divider(
-                //   color: Colors.grey,
-                //   height: 0,
-                // )
-              ],
-            ),
-          ),
+          //             labelColor: Color(0xFF1054DE), // #1054DE color
+          //             unselectedLabelColor: Colors.grey,
+          //             indicatorColor: Color(0xFF1054DE),
+          //             labelStyle: TextStyle(
+          //               fontSize: 17,
+          //               fontWeight: FontWeight.w600,
+          //               fontFamily: 'SF Pro Text',
+          //             ),
+          //             tabs: [
+          //               Tab(
+          //                 text: "Newfeed",
+          //               ),
+          //               Tab(text: "Explore"),
+          //             ],
+          //           ),
+          //         ],
+          //       ),
+          //       // Divider(
+          //       //   color: Colors.grey,
+          //       //   height: 0,
+          //       // )
+          //     ],
+          //   ),
+          // ),
         ),
-        body: TabBarView(
-          children: [
-            Scaffold(
-              //Remove this code
-              // floatingActionButton: FloatingActionButton(
-              //   shape: const CircleBorder(),
-              //   onPressed: () {
-              //     // Navigate or perform action based on 'Newsfeed' tap
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //       builder: (context) => const Scaffold(body: PostToPage()),
-              //     ));
-              //   },
-              //   backgroundColor: AmityUIConfiguration().primaryColor,
-              //   child: Provider.of<AmityUIConfiguration>(context)
-              //       .iconConfig
-              //       .postIcon(iconSize: 28, color: Colors.white),
-              // ),
-              body: GlobalFeedScreen(
-                isShowMyCommunity: widget.isShowMyCommunity,
-              ),
-            ),
-            const ExplorePage(),
-          ],
+        body: GlobalFeedScreen(
+          isShowMyCommunity: widget.isShowMyCommunity,
         ),
+        //Remove
+        // body: TabBarView(
+        //   children: [
+        //     Scaffold(
+        //       //Remove this code
+        //       // floatingActionButton: FloatingActionButton(
+        //       //   shape: const CircleBorder(),
+        //       //   onPressed: () {
+        //       //     // Navigate or perform action based on 'Newsfeed' tap
+        //       //     Navigator.of(context).push(MaterialPageRoute(
+        //       //       builder: (context) => const Scaffold(body: PostToPage()),
+        //       //     ));
+        //       //   },
+        //       //   backgroundColor: AmityUIConfiguration().primaryColor,
+        //       //   child: Provider.of<AmityUIConfiguration>(context)
+        //       //       .iconConfig
+        //       //       .postIcon(iconSize: 28, color: Colors.white),
+        //       // ),
+        //       body: GlobalFeedScreen(
+        //         isShowMyCommunity: widget.isShowMyCommunity,
+        //       ),
+        //     ),
+        //     const ExplorePage(),
+        //   ],
+        // ),
       ),
     );
   }

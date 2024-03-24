@@ -1,5 +1,6 @@
 import 'package:amity_sdk/amity_sdk.dart';
 import 'package:amity_uikit_beta_service/components/network_image.dart';
+import 'package:amity_uikit_beta_service/utils/string_extension.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screen.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/create_post_screenV2.dart';
 import 'package:amity_uikit_beta_service/viewmodel/configuration_viewmodel.dart';
@@ -78,54 +79,55 @@ class _PostToPageState extends State<PostToPage> {
                   ));
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "My community",
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: const Color(0xff292B32).withOpacity(0.4)),
-                ),
-              ),
-              ...viewModel.amityCommunities.map((community) {
-                return StreamBuilder<AmityCommunity>(
-                    stream: community.listen.stream,
-                    builder: (context, snapshot) {
-                      var communityStream = snapshot.data ?? community;
-                      return ListTile(
-                        leading: (communityStream.avatarFileId != null)
-                            ? CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                backgroundImage: NetworkImage(
-                                    communityStream.avatarImage!.fileUrl!),
-                              )
-                            : Container(
-                                height: 40,
-                                width: 40,
-                                decoration: const BoxDecoration(
-                                    color: Color(0xFFD9E5FC),
-                                    shape: BoxShape.circle),
-                                child: const Icon(
-                                  Icons.group,
-                                  color: Colors.white,
-                                ),
-                              ),
-                        title: Text(
-                          community.displayName ?? '',
-                          style: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
-                        ),
-                        onTap: () {
-                          // Navigate or perform action based on 'Newsfeed' tap
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AmityCreatePostV2Screen(
-                              community: community,
-                            ),
-                          ));
-                        },
-                      );
-                    });
-              }).toList(),
+              //Remove
+              // Padding(
+              //   padding: const EdgeInsets.all(16.0),
+              //   child: Text(
+              //     "My community",
+              //     style: TextStyle(
+              //         fontSize: 15,
+              //         color: const Color(0xff292B32).withOpacity(0.4)),
+              //   ),
+              // ),
+              // ...viewModel.amityCommunities.map((community) {
+              //   return StreamBuilder<AmityCommunity>(
+              //       stream: community.listen.stream,
+              //       builder: (context, snapshot) {
+              //         var communityStream = snapshot.data ?? community;
+              //         return ListTile(
+              //           leading: (communityStream.avatarFileId != null)
+              //               ? CircleAvatar(
+              //                   backgroundColor: Colors.transparent,
+              //                   backgroundImage: NetworkImage(
+              //                       communityStream.avatarImage!.fileUrl!),
+              //                 )
+              //               : Container(
+              //                   height: 40,
+              //                   width: 40,
+              //                   decoration: const BoxDecoration(
+              //                       color: Color(0xFFD9E5FC),
+              //                       shape: BoxShape.circle),
+              //                   child: const Icon(
+              //                     Icons.group,
+              //                     color: Colors.white,
+              //                   ),
+              //                 ),
+              //           title: Text(
+              //             community.displayName?.toTitleCase() ?? '',
+              //             style: const TextStyle(
+              //                 fontSize: 15, fontWeight: FontWeight.w600),
+              //           ),
+              //           onTap: () {
+              //             // Navigate or perform action based on 'Newsfeed' tap
+              //             Navigator.of(context).push(MaterialPageRoute(
+              //               builder: (context) => AmityCreatePostV2Screen(
+              //                 community: community,
+              //               ),
+              //             ));
+              //           },
+              //         );
+              //       });
+              // }).toList(),
             ],
           );
         },
