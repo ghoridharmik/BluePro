@@ -172,29 +172,31 @@ class CommunityIconList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 40,
-            color: Colors.white,
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'My Community',
-                  style: TextStyle(
-                    fontSize: 17.0,
-                    fontWeight: FontWeight.bold,
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const Scaffold(body: MyCommunityPage()),
+              ));
+            },
+            child: Container(
+              height: 40,
+              color: Colors.white,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'My Community',
+                    style: TextStyle(
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            const Scaffold(body: MyCommunityPage()),
-                      ));
-                    },
-                    child: Container(child: const Icon(Icons.chevron_right))),
-              ],
+                  Container(child: const Icon(Icons.chevron_right)),
+                ],
+              ),
             ),
           ),
           Container(

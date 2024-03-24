@@ -135,12 +135,15 @@ class ExplorePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: const [
-        RecommendationSection(),
-        TrendingSection(),
-        CategorySection(),
-      ],
+    return Container(
+      color: Colors.white,
+      child: ListView(
+        children: const [
+          RecommendationSection(),
+          TrendingSection(),
+          CategorySection(),
+        ],
+      ),
     );
   }
 }
@@ -170,103 +173,118 @@ class RecommendationSection extends StatelessWidget {
               ),
               SizedBox(
                 height: 194,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: vm.recommendedCommunities.length,
-                  itemBuilder: (context, index) {
-                    final community = vm.recommendedCommunities[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                  CommunityScreen(community: community)));
-                        },
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(4), // No border radius
-                          ),
-                          color: Colors.white,
-                          child: Container(
-                            width: 131,
-                            height: 194,
-                            margin: const EdgeInsets.all(12),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                community.avatarImage == null
-                                    ? const CircleAvatar(
-                                        backgroundColor: Color(0xFFD9E5FC),
-                                        child: Icon(Icons.people,
-                                            color: Colors.white))
-                                    : CircleAvatar(
-                                        backgroundColor:
-                                            const Color(0xFFD9E5FC),
-                                        backgroundImage: NetworkImage(
-                                            community.avatarImage!.fileUrl!),
-                                        radius:
-                                            20, // Adjusted the radius to get 40x40 size
-                                      ),
-                                const SizedBox(height: 8.0),
-                                Text(
-                                  community.displayName ?? '',
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
-                                  overflow: TextOverflow
-                                      .ellipsis, // Handle text overflow
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                community.categories!.isEmpty
-                                    ? const Text(
-                                        '',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 13),
-                                        overflow: TextOverflow
-                                            .ellipsis, // Handle text overflow
-                                      )
-                                    : Text(
-                                        '${community.categories?[0]?.name}',
-                                        style: const TextStyle(
-                                            color: Colors.black, fontSize: 13),
-                                        overflow: TextOverflow
-                                            .ellipsis, // Handle text overflow
-                                      ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  '${community.membersCount} Members',
-                                  style:
-                                      const TextStyle(color: Color(0xff636878)),
-                                  overflow: TextOverflow
-                                      .ellipsis, // Handle text overflow
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    community.description ?? '',
-                                    softWrap: true,
-                                    style: const TextStyle(fontSize: 13),
-                                    overflow: TextOverflow
-                                        .ellipsis, // Handle text overflow
-                                    maxLines: 3, // Display up to two lines
-                                  ),
-                                ),
-                              ],
-                            ),
+                child: vm.recommendedCommunities.isEmpty
+                    ? const Center(
+                        child: Text(
+                          "No Data Found",
+                          style: TextStyle(
+                            fontSize: 16,
                           ),
                         ),
+                      )
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: vm.recommendedCommunities.length,
+                        itemBuilder: (context, index) {
+                          final community = vm.recommendedCommunities[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        CommunityScreen(community: community)));
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      4), // No border radius
+                                ),
+                                color: Colors.white,
+                                child: Container(
+                                  width: 131,
+                                  height: 194,
+                                  margin: const EdgeInsets.all(12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      community.avatarImage == null
+                                          ? const CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFFD9E5FC),
+                                              child: Icon(Icons.people,
+                                                  color: Colors.white))
+                                          : CircleAvatar(
+                                              backgroundColor:
+                                                  const Color(0xFFD9E5FC),
+                                              backgroundImage: NetworkImage(
+                                                  community
+                                                      .avatarImage!.fileUrl!),
+                                              radius:
+                                                  20, // Adjusted the radius to get 40x40 size
+                                            ),
+                                      const SizedBox(height: 8.0),
+                                      Text(
+                                        community.displayName ?? '',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15),
+                                        overflow: TextOverflow
+                                            .ellipsis, // Handle text overflow
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      community.categories!.isEmpty
+                                          ? const Text(
+                                              '',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13),
+                                              overflow: TextOverflow
+                                                  .ellipsis, // Handle text overflow
+                                            )
+                                          : Text(
+                                              '${community.categories?[0]?.name}',
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 13),
+                                              overflow: TextOverflow
+                                                  .ellipsis, // Handle text overflow
+                                            ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '${community.membersCount} Members',
+                                        style: const TextStyle(
+                                            color: Color(0xff636878)),
+                                        overflow: TextOverflow
+                                            .ellipsis, // Handle text overflow
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          community.description ?? '',
+                                          softWrap: true,
+                                          style: const TextStyle(fontSize: 13),
+                                          overflow: TextOverflow
+                                              .ellipsis, // Handle text overflow
+                                          maxLines:
+                                              3, // Display up to two lines
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ],
           ),
@@ -375,100 +393,100 @@ class CategorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ExplorePageVM>(
       builder: (context, vm, _) {
-        return Container(
-          padding: const EdgeInsets.only(left: 16, top: 20, bottom: 25),
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 12,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Categories',
-                    style: Provider.of<AmityUIConfiguration>(context)
-                        .titleTextStyle,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const CategoryListPage()),
-                      );
-                    },
-                    child: const Padding(
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CategoryListPage()),
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.only(left: 16, top: 20, bottom: 25),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Categories',
+                      style: Provider.of<AmityUIConfiguration>(context)
+                          .titleTextStyle,
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    const Padding(
                       padding: EdgeInsets.only(right: 14.0),
                       child: Icon(
                         Icons.chevron_right,
                         size: 18,
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 5,
-                  mainAxisSpacing: 16, // Add spacing between rows
+                  ],
                 ),
-                itemCount: vm.amityCategories.length > 8
-                    ? 8
-                    : vm.amityCategories
-                        .length, // Limit to maximum 8 items (2x4 grid)
-                itemBuilder: (context, index) {
-                  final category = vm.amityCategories[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CommunityListPage(
-                                  category: category,
-                                )),
-                      );
-                    },
-                    child: Container(
-                      color: Colors.white,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 40,
-                            decoration: const BoxDecoration(
-                                color: Color(0xFFD9E5FC),
-                                shape: BoxShape.circle),
-                            child: const Icon(
-                              Icons.category,
-                              color: Colors.white,
+                const SizedBox(
+                  height: 13,
+                ),
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 5,
+                    mainAxisSpacing: 16, // Add spacing between rows
+                  ),
+                  itemCount: vm.amityCategories.length > 8
+                      ? 8
+                      : vm.amityCategories
+                          .length, // Limit to maximum 8 items (2x4 grid)
+                  itemBuilder: (context, index) {
+                    final category = vm.amityCategories[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CommunityListPage(
+                                    category: category,
+                                  )),
+                        );
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: const BoxDecoration(
+                                  color: Color(0xFFD9E5FC),
+                                  shape: BoxShape.circle),
+                              child: const Icon(
+                                Icons.category,
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              category.name ?? '',
-                              overflow: TextOverflow.ellipsis,
+                            const SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                category.name ?? '',
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -491,39 +509,51 @@ class CategoryListPage extends StatelessWidget {
         ),
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Consumer<ExplorePageVM>(
-        builder: (context, vm, _) {
-          return ListView.builder(
-            itemCount: vm.amityCategories.length,
-            itemBuilder: (context, index) {
-              final category = vm.amityCategories[index];
-              return ListTile(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CommunityListPage(
-                              category: category,
-                            )),
+      body: Container(
+        color: Colors.white,
+        child: Consumer<ExplorePageVM>(
+          builder: (context, vm, _) {
+            return vm.amityCategories.isEmpty
+                ? const Center(
+                    child: Text(
+                    "No Category Available",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    ),
+                  ))
+                : ListView.builder(
+                    itemCount: vm.amityCategories.length,
+                    itemBuilder: (context, index) {
+                      final category = vm.amityCategories[index];
+                      return ListTile(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CommunityListPage(
+                                      category: category,
+                                    )),
+                          );
+                        },
+                        leading: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFD9E5FC),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.category,
+                            color: Colors.white,
+                          ),
+                        ),
+                        title: Text(category.name ?? ''),
+                      );
+                    },
                   );
-                },
-                leading: Container(
-                  height: 40,
-                  width: 40,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFD9E5FC),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.category,
-                    color: Colors.white,
-                  ),
-                ),
-                title: Text(category.name ?? ''),
-              );
-            },
-          );
-        },
+          },
+        ),
       ),
     );
   }

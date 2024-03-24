@@ -107,7 +107,6 @@ class CommentScreenState extends State<CommentScreen> {
           stream: vm.amityPost.listen.stream,
           initialData: vm.amityPost,
           builder: (context, snapshot) {
-            var snapshotPostData = snapshot.data?.data as TextData;
             var actionSection = Column(
               children: [
                 Container(

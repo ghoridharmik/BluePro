@@ -41,6 +41,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
   }
 
   bool isShowloader = false;
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +53,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
     }
 
     globalFeedProvider.initAmityGlobalfeed();
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       isShowloader = false;
     });
     setState(() {});
@@ -82,7 +83,7 @@ class GlobalFeedScreenState extends State<GlobalFeedScreen> {
                   endOffset: const Offset(0, 0),
                   slideCurve: Curves.linearToEaseOut,
                   child: isShowloader
-                      ? Center(
+                      ? const Center(
                           child: CupertinoActivityIndicator(
                           color: Colors.black,
                         ))
@@ -495,88 +496,83 @@ class _PostWidgetState extends State<PostWidget>
                     postWidgets(),
                     widget.feedType == FeedType.pending
                         ? const SizedBox()
-                        : Container(
-                            child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 16, bottom: 16, left: 0, right: 0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Builder(builder: (context) {
-                                      return widget.post.reactionCount! > 0
-                                          ? Row(
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: 10,
-                                                  backgroundColor: Provider.of<
-                                                              AmityUIConfiguration>(
-                                                          context)
-                                                      .primaryColor,
-                                                  child: const Icon(
-                                                    Icons.thumb_up,
-                                                    color: Colors.white,
-                                                    size: 13,
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                    widget.post.reactionCount
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize:
-                                                            feedReactionCountSize,
-                                                        letterSpacing: 1)),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                    widget.post.reactionCount! >
-                                                            1
-                                                        ? "likes"
-                                                        : "like",
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontSize:
-                                                            feedReactionCountSize,
-                                                        letterSpacing: 1)),
-                                              ],
-                                            )
-                                          : const SizedBox(
-                                              width: 0,
-                                            );
-                                    }),
-                                    Builder(builder: (context) {
-                                      // any logic needed...
-                                      if (widget.post.commentCount! > 1) {
-                                        return Text(
-                                          '${widget.post.commentCount} comments',
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: feedReactionCountSize,
-                                              letterSpacing: 0.5),
-                                        );
-                                      } else if (widget.post.commentCount! ==
-                                          0) {
-                                        return const SizedBox(
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                                top: 16, bottom: 16, left: 0, right: 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Builder(builder: (context) {
+                                  return widget.post.reactionCount! > 0
+                                      ? Row(
+                                          children: [
+                                            CircleAvatar(
+                                              radius: 10,
+                                              backgroundColor: Provider.of<
+                                                          AmityUIConfiguration>(
+                                                      context)
+                                                  .primaryColor,
+                                              child: const Icon(
+                                                Icons.thumb_up,
+                                                color: Colors.white,
+                                                size: 13,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                                widget.post.reactionCount
+                                                    .toString(),
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        feedReactionCountSize,
+                                                    letterSpacing: 1)),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                                widget.post.reactionCount! > 1
+                                                    ? "likes"
+                                                    : "like",
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize:
+                                                        feedReactionCountSize,
+                                                    letterSpacing: 1)),
+                                          ],
+                                        )
+                                      : const SizedBox(
                                           width: 0,
                                         );
-                                      } else {
-                                        return Text(
-                                          '${widget.post.commentCount} comment',
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: feedReactionCountSize,
-                                              letterSpacing: 0.5),
-                                        );
-                                      }
-                                    })
-                                  ],
-                                )),
-                          ),
+                                }),
+                                Builder(builder: (context) {
+                                  // any logic needed...
+                                  if (widget.post.commentCount! > 1) {
+                                    return Text(
+                                      '${widget.post.commentCount} comments',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: feedReactionCountSize,
+                                          letterSpacing: 0.5),
+                                    );
+                                  } else if (widget.post.commentCount! == 0) {
+                                    return const SizedBox(
+                                      width: 0,
+                                    );
+                                  } else {
+                                    return Text(
+                                      '${widget.post.commentCount} comment',
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: feedReactionCountSize,
+                                          letterSpacing: 0.5),
+                                    );
+                                  }
+                                })
+                              ],
+                            )),
                     const Divider(
                       color: Colors.grey,
                       height: 8,

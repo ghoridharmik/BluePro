@@ -28,6 +28,7 @@ class _PostReviewPageState extends State<PostReviewPage> {
         Provider.of<CommunityVM>(context, listen: false); // Get the ViewModel
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'Post Review',

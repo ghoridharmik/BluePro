@@ -86,32 +86,33 @@ class CommunitySettingPage extends StatelessWidget {
                           builder: (context) => MemberManagementPage(
                               communityId: livecommunity.communityId!)));
                     }),
-                ListTile(
-                  leading: Container(
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                            4), // Adjust radius to your need
-                        color: const Color(
-                            0xfff1f1f1), // Choose the color to fit your design
-                      ),
-                      child: const Icon(Icons.notifications,
-                          color: Color(0xff292B32))),
-                  title: const Text("Notifications"),
-                  trailing: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("On"), // Replace with dynamic text
-                      Icon(Icons.chevron_right, color: Color(0xff292B32)),
-                    ],
-                  ),
-                  onTap: () {
-                    // Navigate to Notifications Page or perform an action
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            NotificationSettingPage(community: livecommunity)));
-                  },
-                ),
+                //REMOVE
+                // ListTile(
+                //   leading: Container(
+                //       padding: const EdgeInsets.all(5),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(
+                //             4), // Adjust radius to your need
+                //         color: const Color(
+                //             0xfff1f1f1), // Choose the color to fit your design
+                //       ),
+                //       child: const Icon(Icons.notifications,
+                //           color: Color(0xff292B32))),
+                //   title: const Text("Notifications"),
+                //   trailing: const Row(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Text("On"), // Replace with dynamic text
+                //       Icon(Icons.chevron_right, color: Color(0xff292B32)),
+                //     ],
+                //   ),
+                //   onTap: () {
+                //     // Navigate to Notifications Page or perform an action
+                //     Navigator.of(context).push(MaterialPageRoute(
+                //         builder: (context) =>
+                //             NotificationSettingPage(community: livecommunity)));
+                //   },
+                // ),
                 !community.hasPermission(AmityPermission.EDIT_COMMUNITY)
                     ? const SizedBox()
                     : const Padding(
