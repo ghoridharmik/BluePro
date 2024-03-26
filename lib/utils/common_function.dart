@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-
-
-class CommonFunction{
+class CommonFunction {
   bool isNullEmptyOrFalse(dynamic o) {
     if (o is Map<String, dynamic> || o is List<dynamic>) {
       return o == null || o.length == 0;
@@ -12,10 +9,11 @@ class CommonFunction{
     return o == null || false == o || "" == o;
   }
 }
+
 class ProgressDialog2 {
   static Future<void> showLoadingDialog(BuildContext context,
       {bool isCancellable = true}) async {
-   return showDialog<void>(
+    return showDialog<void>(
       context: context,
       barrierDismissible: isCancellable,
       builder: (BuildContext context) {
@@ -45,6 +43,6 @@ class ProgressDialog2 {
   }
 
   static void hideProgressDialog(context) {
-   return   Navigator.pop(context);
+    return Navigator.pop(context);
   }
 }

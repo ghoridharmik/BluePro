@@ -35,9 +35,10 @@ class _CommunityPageState extends State<CommunityPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           elevation: 0.05, // Add this line to remove the shadow
           backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.blue),
+          // iconTheme: const IconThemeData(color: Colors.blue),
           // leading: IconButton(
           //   icon: const Icon(
           //     Icons.close,

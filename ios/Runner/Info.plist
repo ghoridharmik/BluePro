@@ -29,7 +29,7 @@
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
-		<key>NSCameraUsageDescription</key>
+	<key>NSCameraUsageDescription</key>
 	<string>bluePro requires access to your phone’s camera.</string>
 	<key>NSDocumentDirectory</key>
 	<string>This is needed For save files in Downloads</string>

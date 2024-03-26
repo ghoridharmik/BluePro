@@ -59,10 +59,11 @@ class FeedVM extends ChangeNotifier {
                 }
               }
             }
-            await Future.delayed(
-              const Duration(milliseconds: 500),
-            );
-            isLoaderForGlobalFeed = false;
+            // await Future.delayed(
+            //   const Duration(milliseconds: 500),
+            // );
+            // isLoaderForGlobalFeed = false;
+
             notifyListeners();
           } else {
             //Error on pagination controller
@@ -80,6 +81,10 @@ class FeedVM extends ChangeNotifier {
     });
     scrollcontroller.removeListener(() {});
     scrollcontroller.addListener(loadnextpage);
+    await Future.delayed(
+      const Duration(milliseconds: 500),
+    );
+    isLoaderForGlobalFeed = false;
   }
 
   void loadnextpage() async {
