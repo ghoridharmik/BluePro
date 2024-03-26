@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -57,7 +59,7 @@ class _LeaderBoardScreenState extends State<LeaderBoardScreen> {
         iconTheme: const IconThemeData(
           color: Colors.white, //change your color here
         ),
-        centerTitle: false,
+        centerTitle: Platform.isAndroid ? false : true,
         title: const Text(
           "LeaderBoard",
           style: TextStyle(

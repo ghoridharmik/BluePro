@@ -2,8 +2,8 @@ import 'package:amity_uikit_beta_service/amity_sle_uikit.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/explore_page.dart';
 import 'package:amity_uikit_beta_service/view/UIKit/social/post_target_page.dart';
 import 'package:amity_uikit_beta_service/view/user/user_profile.dart';
-import 'package:blupro/component/common_webview.dart';
-import 'package:blupro/home/home_screen.dart';
+import 'package:blupro/component/leader_board_webview.dart';
+import 'package:blupro/home/streaming_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomBarScreen extends StatefulWidget {
